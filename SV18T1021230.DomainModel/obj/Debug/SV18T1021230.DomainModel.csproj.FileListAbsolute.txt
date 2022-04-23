@@ -1,0 +1,6 @@
+D:\laptrinhweb\SV18T1021230\SV18T1021230.DomainModel\bin\Debug\SV18T1021230.DomainModel.dll
+D:\laptrinhweb\SV18T1021230\SV18T1021230.DomainModel\bin\Debug\SV18T1021230.DomainModel.pdb
+D:\laptrinhweb\SV18T1021230\SV18T1021230.DomainModel\obj\Debug\SV18T1021230.DomainModel.csproj.AssemblyReference.cache
+D:\laptrinhweb\SV18T1021230\SV18T1021230.DomainModel\obj\Debug\SV18T1021230.DomainModel.csproj.CoreCompileInputs.cache
+D:\laptrinhweb\SV18T1021230\SV18T1021230.DomainModel\obj\Debug\SV18T1021230.DomainModel.dll
+D:\laptrinhweb\SV18T1021230\SV18T1021230.DomainModel\obj\Debug\SV18T1021230.DomainModel.pdb
