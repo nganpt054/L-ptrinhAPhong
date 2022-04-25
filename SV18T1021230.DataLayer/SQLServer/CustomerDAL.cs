@@ -12,7 +12,7 @@ namespace SV18T1021230.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class CustomerDAL : _BaseDAL, ICustomerDAL
+    public class CustomerDAL : _BaseDAL, ICommomDAL<Customer>
     {
         /// <summary>
         /// Contrucstor
@@ -173,7 +173,7 @@ namespace SV18T1021230.DataLayer.SQLServer
         /// <param name="pageSize"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        public IList<Customer> List(int page, int pageSize, string searchValue)
+        public IList<Customer> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Customer> data = new List<Customer>();
             if (searchValue != "")
@@ -193,7 +193,7 @@ namespace SV18T1021230.DataLayer.SQLServer
                                                  OR (Address LIKE @searchValue)
                                                 )
                                     ) AS t
-                                    WHERE t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize;";
+                                    WHERE (@PageSize=0) OR (t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize)";
 
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;

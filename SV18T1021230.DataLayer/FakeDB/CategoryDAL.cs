@@ -10,7 +10,7 @@ namespace SV18T1021230.DataLayer.FakeDB
     /// <summary>
     /// Cài đặt chức năng xử lý dữ liệu trên loại hàng theo kiểu "fake"
     /// </summary>
-    public class CategoryDAL : ICategoryDAL
+    public class CategoryDAL : ICommomDAL<Category>
     {
         /// <summary>
         /// 

@@ -12,7 +12,7 @@ namespace SV18T1021230.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class ShipperDAL : _BaseDAL,IShipperDAL
+    public class ShipperDAL : _BaseDAL,ICommomDAL<Shipper>
     {
         /// <summary>
         /// 
@@ -167,7 +167,7 @@ namespace SV18T1021230.DataLayer.SQLServer
         /// <param name="searchValue"></param>
         /// <returns></returns>
 
-        public IList<Shipper> List(int page, int pageSize, string searchValue)
+        public IList<Shipper> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Shipper> data = new List<Shipper>();
             if (searchValue != "")
@@ -187,7 +187,7 @@ namespace SV18T1021230.DataLayer.SQLServer
                                              
                                             )
                                 ) AS t
-                                WHERE t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize;";
+                                WHERE (@PageSize=0) OR ( t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize)";
 
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;

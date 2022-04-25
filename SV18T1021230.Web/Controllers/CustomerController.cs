@@ -103,24 +103,40 @@ namespace SV18T1021230.Web.Controllers
             {
                 ModelState.AddModelError("ContactName", "Tên giao dịch không được để trống");
             }
+            if (string.IsNullOrWhiteSpace(model.Address))
+            {
+                ModelState.AddModelError("Address", "Địa chỉ không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.City))
+            {
+                ModelState.AddModelError("City", "Thành phố không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.Country))
+            {
+                ModelState.AddModelError("Country", "Country không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.PostalCode))
+            {
+                ModelState.AddModelError("PostalCode", "Mã bưu chính không được để trống");
+            }
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Title =model.CustomerID==0?"Bổ sung khách hàng": "Cập nhật khách hàng";
+                    return View("Create", model);
+                }
 
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Title = "Khách hàng";
-                return View("Create", model);
+                if (model.CustomerID == 0)
+                {
+                    CommonDataService.AddCustomer(model);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    CommonDataService.UpdateCustomer(model);
+                    return RedirectToAction("Index");
+                }
             }
-
-            if (model.CustomerID == 0)
-            {
-                CommonDataService.AddCustomer(model);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                CommonDataService.UpdateCustomer(model);
-                return RedirectToAction("Index");
-            }
-        }
+        
         /// <summary>
         /// 
         /// </summary>

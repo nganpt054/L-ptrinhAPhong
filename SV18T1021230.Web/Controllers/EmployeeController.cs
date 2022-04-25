@@ -88,7 +88,32 @@ namespace SV18T1021230.Web.Controllers
             string urlImage = Server.MapPath("~/images/" + filename);
             photo.SaveAs(urlImage);
             model.Photo = "images/" + filename;
-            
+
+            if (string.IsNullOrWhiteSpace(model.LastName))
+            {
+                ModelState.AddModelError("LastName", "Họ không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.FirstName))
+            {
+                ModelState.AddModelError("FirstName", "Tên không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.Notes))
+            {
+                ModelState.AddModelError("Notes", "Ghi chú không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.Email))
+            {
+                ModelState.AddModelError("Email", "Email không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.Password))
+            {
+                ModelState.AddModelError("Password", "Mật khẩu không được để trống");
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = model.EmployeeID == 0 ? "Bổ sung nhân viên" : "Cập nhật nhân viên";
+                return View("Create", model);
+            }
             if (model.EmployeeID == 0)
             {
                 CommonDataService.AddEmployee(model);

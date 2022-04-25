@@ -12,7 +12,7 @@ namespace SV18T1021230.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class EmployeeDAL : _BaseDAL,IEmployeeDAL
+    public class EmployeeDAL : _BaseDAL,ICommomDAL<Employee>
     {
         /// <summary>
         /// 
@@ -177,7 +177,7 @@ namespace SV18T1021230.DataLayer.SQLServer
         /// <param name="searchValue"></param>
         /// <returns></returns>
 
-        public IList<Employee> List(int page, int pageSize, string searchValue)
+        public IList<Employee> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Employee> data = new List<Employee>();
             if (searchValue != "")
@@ -197,7 +197,7 @@ namespace SV18T1021230.DataLayer.SQLServer
                                          OR (Email LIKE @searchValue)
                                         )
                             ) AS t
-                            WHERE t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize;";
+                            WHERE (@PageSize=0) OR ( t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize)";
 
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;

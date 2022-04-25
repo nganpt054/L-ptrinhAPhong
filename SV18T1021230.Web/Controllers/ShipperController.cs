@@ -82,12 +82,12 @@ namespace SV18T1021230.Web.Controllers
             }
             if (string.IsNullOrWhiteSpace(model.Phone))
             {
-                ModelState.AddModelError("Phone", "Tên giao dịch không được để trống");
+                ModelState.AddModelError("Phone", "Số điện thoại không được để trống");
             }
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Title = "Người giao hàng";
+                ViewBag.Title =model.ShipperID==0? "Bổ sung người giao hàng":"Cập nhật người giao hàng";
                 return View("Create", model);
             }
 

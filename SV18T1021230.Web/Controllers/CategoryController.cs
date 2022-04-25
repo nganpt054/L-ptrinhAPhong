@@ -76,18 +76,15 @@ namespace SV18T1021230.Web.Controllers
         /// <returns></returns>
         public ActionResult Save(Category model)
         {
-            //if (string.IsNullOrWhiteSpace(model.CustomerName))
-            //{
-            //    ModelState.AddModelError("CustomerName", "Tên không được để trống");
-            //}
-            //if (string.IsNullOrWhiteSpace(model.ContactName))
-            //{
-            //    ModelState.AddModelError("ContactName", "Tên giao dịch không được để trống");
-            //}
+            if (string.IsNullOrWhiteSpace(model.CategoryName))
+            {
+                ModelState.AddModelError("CategoryName", "Tên không được để trống");
+            }
+
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Title = "Loại hàng";
+                ViewBag.Title = model.CategoryID == 0 ? "Bổ sung loại hàng" : "Cập nhậtloại hàng";
                 return View("Create", model);
             }
 

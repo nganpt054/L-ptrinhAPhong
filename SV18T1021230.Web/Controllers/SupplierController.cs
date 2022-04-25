@@ -78,29 +78,49 @@ namespace SV18T1021230.Web.Controllers
         {
             if (string.IsNullOrWhiteSpace(model.SupplierName))
             {
-                ModelState.AddModelError("CustomerName", "Tên không được để trống");
+                ModelState.AddModelError("SupplierName", "Tên không được để trống");
             }
             if (string.IsNullOrWhiteSpace(model.ContactName))
             {
                 ModelState.AddModelError("ContactName", "Tên giao dịch không được để trống");
             }
+            if (string.IsNullOrWhiteSpace(model.Address))
+            {
+                ModelState.AddModelError("Address", "Địa chỉ không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.City))
+            {
+                ModelState.AddModelError("City", "Thành phố không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.Country))
+            {
+                ModelState.AddModelError("Country", "Country không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.PostalCode))
+            {
+                ModelState.AddModelError("PostalCode", "Mã bưu chính không được để trống");
+            }
+            if (string.IsNullOrWhiteSpace(model.Phone))
+            {
+                ModelState.AddModelError("Phone", "Số điện thoại không được để trống");
+            }
 
             if (!ModelState.IsValid)
-            {
-                ViewBag.Title = "Nhà cung cấp";
-                return View("Create", model);
-            }
+                {
+                    ViewBag.Title =model.SupplierID==0? "Bổ sung nhà cung cấp":"Cập nhật nhà cung cấp";
+                    return View("Create", model);
+                }
 
-            if (model.SupplierID == 0)
-            {
-                CommonDataService.AddSupplier(model);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                CommonDataService.UpdateSupplier(model);
-                return RedirectToAction("Index");
-            }
+                if (model.SupplierID == 0)
+                {
+                    CommonDataService.AddSupplier(model);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    CommonDataService.UpdateSupplier(model);
+                    return RedirectToAction("Index");
+                }
         }
         /// <summary>
         /// 

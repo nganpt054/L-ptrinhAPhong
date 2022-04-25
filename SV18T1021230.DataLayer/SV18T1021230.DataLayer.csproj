@@ -42,12 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FakeDB\CategoryDAL.cs" />
-    <Compile Include="ICategoryDAL.cs" />
-    <Compile Include="ICountryDAL.cs" />
-    <Compile Include="ICustomerDAL.cs" />
-    <Compile Include="IEmployeeDAL.cs" />
-    <Compile Include="IShipperDAL.cs" />
-    <Compile Include="ISupplierDAL.cs" />
+    <Compile Include="ICommomDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLServer\CategoryDAL.cs" />
     <Compile Include="SQLServer\CountryDAL.cs" />

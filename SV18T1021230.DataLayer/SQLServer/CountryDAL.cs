@@ -12,7 +12,7 @@ namespace SV18T1021230.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class CountryDAL : _BaseDAL,ICountryDAL
+    public class CountryDAL : _BaseDAL,ICommomDAL<Country>
     {
         /// <summary>
         /// 
@@ -21,11 +21,62 @@ namespace SV18T1021230.DataLayer.SQLServer
         public CountryDAL(string connectionString) : base(connectionString)
         {
         }
+
+        public int Add(Country data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Count(string searchValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Country Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool InUsed(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IList<Country> List()
+        //public IList<Country> List()
+        //{
+        //    List<Country> data = new List<Country>();
+        //    using (SqlConnection cn = OpenConnection())
+        //    {
+        //        SqlCommand cmd = new SqlCommand();
+        //        cmd.CommandText = @"SELECT * FROM Countries";
+        //        cmd.CommandType = CommandType.Text;
+        //        cmd.Connection = cn;
+
+        //        SqlDataReader dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+        //        while (dbReader.Read())
+        //        {
+        //            data.Add(new Country()
+        //            {
+        //                CountryName = Convert.ToString(dbReader["CountryName"])
+        //            });
+        //        }
+        //        dbReader.Close();
+        //        cn.Close();
+
+        //    }
+        //    return data;
+        //}
+
+        public IList<Country> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Country> data = new List<Country>();
             using (SqlConnection cn = OpenConnection())
@@ -48,6 +99,11 @@ namespace SV18T1021230.DataLayer.SQLServer
 
             }
             return data;
+        }
+
+        public bool Update(Country data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

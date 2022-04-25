@@ -12,82 +12,50 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Tên nhà cung cấp:</label>
                 <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="SupplierName"
-                           name="SupplierName"
-                           placeholder="" autofocus value="@Model.SupplierName">
+                    @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control", @autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.SupplierName, "", new { @style = "color:red" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">Tên giao dịch:</label>
                 <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="ContactName"
-                           name="ContactName"
-                           placeholder="" value="@Model.ContactName">
+                    @Html.TextBoxFor(m => m.ContactName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ContactName, "", new { @style = "color:red" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">Địa chỉ:</label>
                 <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="Address"
-                           name="Address"
-                           placeholder="" value="@Model.Address">
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @style = "color:red" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">Quốc gia:</label>
                 <div class="col-sm-10">
-                    <select class="form-control"
-                            id="Country"
-                            name="Country"
-                            placeholder="" value="@Model.Country">
-                        @foreach (var country in SV18T1021230.BusinessLayer.CommonDataService.ListOfCountries())
-                        {
-                            if (country.CountryName == Model.Country)
-                            {
-                                <option value="@country.CountryName" selected>@country.CountryName</option>
-                            }
-                            else
-                            {
-                                <option value="@country.CountryName">@country.CountryName</option>
-                            }
-                        }
-                    </select>
+                    @Html.DropDownListFor(m => m.Country, SelectListHelper.Countries(), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Country, "", new { @style = "color:red" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">Thành phố:</label>
                 <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="City"
-                           name="City"
-                           placeholder="" value="@Model.City">
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.City, "", new { @style = "color:red" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">Mã số thuế:</label>
                 <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="PostalCode"
-                           name="PostalCode"
-                           placeholder="" value="@Model.PostalCode">
+                    @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PostalCode, "", new { @style = "color:red" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">Điện thoại:</label>
                 <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="Phone"
-                           name="Phone"
-                           placeholder="" value="@Model.Phone">
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Phone, "", new { @style = "color:red" })
                 </div>
             </div>
 

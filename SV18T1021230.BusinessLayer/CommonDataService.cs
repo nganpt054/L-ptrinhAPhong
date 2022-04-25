@@ -14,12 +14,12 @@ namespace SV18T1021230.BusinessLayer
     /// </summary>
     public static class CommonDataService
     {
-        private static readonly ICountryDAL countryDB;
-        private static readonly ICategoryDAL categoryDB;
-        private static readonly ICustomerDAL customerDB;
-        private static readonly ISupplierDAL supplierDB;
-        private static readonly IEmployeeDAL employeeDB;
-        private static readonly IShipperDAL shipperDB;
+        private static readonly ICommomDAL<Country> countryDB;
+        private static readonly ICommomDAL<Category> categoryDB;
+        private static readonly ICommomDAL<Customer> customerDB;
+        private static readonly ICommomDAL<Supplier> supplierDB;
+        private static readonly ICommomDAL<Employee> employeeDB;
+        private static readonly ICommomDAL<Shipper> shipperDB;
 
 
         /// <summary>
@@ -47,14 +47,7 @@ namespace SV18T1021230.BusinessLayer
                 categoryDB = new DataLayer.FakeDB.CategoryDAL();
             }
         }
-        /// <summary>
-        /// Lấy danh sách các mặt hàng
-        /// </summary>
-        /// <returns></returns>
-        public static List<Category> ListOfCategories()
-        {
-            return categoryDB.List().ToList();
-        }
+        
 
         /// <summary>
         /// Lấy thông tin đất nước
@@ -63,6 +56,14 @@ namespace SV18T1021230.BusinessLayer
         public static List<Country> ListOfCountries()
         {
             return countryDB.List().ToList();
+        }
+        /// <summary>
+        /// Lấy danh sách các mặt hàng
+        /// </summary>
+        /// <returns></returns>
+        public static List<Category> ListOfCategories()
+        {
+            return categoryDB.List(1, 0, "").ToList();
         }
         public static List<Category> ListOfCategories(int page,
                                                        int pageSize,
@@ -113,6 +114,14 @@ namespace SV18T1021230.BusinessLayer
         public static bool InUsedCategory(int categoryID)
         {
             return categoryDB.InUsed(categoryID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<Customer> ListOfCustomers()
+        {
+            return customerDB.List().ToList();
         }
         /// <summary>
         /// Tìm kiếm và lấy danh sách loại hàng dưới dạng phân trang
@@ -171,6 +180,10 @@ namespace SV18T1021230.BusinessLayer
         public static bool InUsedCustomer(int customerID)
         {
             return customerDB.InUsed(customerID);
+        }
+        public static List<Supplier> ListOfSuppliers()
+        {
+            return supplierDB.List().ToList();
         }
         /// <summary>
         /// Nhà cung cấp
@@ -235,6 +248,10 @@ namespace SV18T1021230.BusinessLayer
         {
             return supplierDB.InUsed(supplierID);
         }
+        public static List<Employee> ListOfEmployees()
+        {
+            return employeeDB.List().ToList();
+        }
         /// <summary>
         /// Nhân viên
         /// </summary>
@@ -292,6 +309,10 @@ namespace SV18T1021230.BusinessLayer
         public static bool InUsedEmployee(int employeeID)
         {
             return employeeDB.InUsed(employeeID);
+        }
+        public static List<Shipper> ListOfShippers()
+        {
+            return shipperDB.List().ToList();
         }
         /// <summary>
         /// Người giao hàng
