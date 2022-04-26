@@ -83,11 +83,18 @@ namespace SV18T1021230.Web.Controllers
         
         public ActionResult Save([Bind(Include = "EmployeeID,LastName,FirstName,BirthDate,Notes,Email,Password")]Employee model,HttpPostedFileBase photo)
         {
-            
-            string filename = System.IO.Path.GetFileName(photo.FileName);
-            string urlImage = Server.MapPath("~/images/" + filename);
-            photo.SaveAs(urlImage);
-            model.Photo = "images/" + filename;
+
+            if (photo != null && photo.ContentLength > 0)
+            {
+                string filename = System.IO.Path.GetFileName(photo.FileName);
+                string urlImage = Server.MapPath("~/images/" + filename);
+                photo.SaveAs(urlImage);
+                model.Photo = "images/" + filename;
+            }
+            if (string.IsNullOrWhiteSpace(model.Photo))
+            {
+                ModelState.AddModelError("Photo", "Ảnh không được để trống");
+            }
 
             if (string.IsNullOrWhiteSpace(model.LastName))
             {
@@ -109,6 +116,7 @@ namespace SV18T1021230.Web.Controllers
             {
                 ModelState.AddModelError("Password", "Mật khẩu không được để trống");
             }
+            
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = model.EmployeeID == 0 ? "Bổ sung nhân viên" : "Cập nhật nhân viên";

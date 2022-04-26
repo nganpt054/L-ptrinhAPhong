@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,10 @@ namespace SV18T1021230.DomainModel
         /// <summary>
         /// 
         /// </summary>
-        public string BirthDate { get; set; }
+        [Required(ErrorMessage = "Yêu cầu nhập ngày")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{dd/mm/yyyy}")]
+        public DateTime BirthDate { get; set; }
         /// <summary>
         /// 
         /// </summary>
