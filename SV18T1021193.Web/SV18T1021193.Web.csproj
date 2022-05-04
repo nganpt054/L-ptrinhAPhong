@@ -137,6 +137,7 @@
     <Compile Include="Models\CategoryPaginationResult.cs" />
     <Compile Include="Models\CustomerPaginationResult.cs" />
     <Compile Include="Models\EmployeePaginationResult.cs" />
+    <Compile Include="Models\PaginationSearchInput.cs" />
     <Compile Include="Models\ShipperPaginationResult.cs" />
     <Compile Include="Models\SupplierPaginationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -5811,6 +5812,8 @@
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\Product\Photo.cshtml" />
     <Content Include="Views\Product\Attribute.cshtml" />
+    <Content Include="Views\Customer\Search.cshtml" />
+    <Content Include="Views\Supplier\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
