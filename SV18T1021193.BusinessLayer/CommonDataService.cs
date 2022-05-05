@@ -21,6 +21,7 @@ namespace SV18T1021193.BusinessLayer
         private static readonly ICommomDAL<Supplier> supplierDB;
         private static readonly ICommomDAL<Employee> employeeDB;
         private static readonly ICommomDAL<Shipper> shipperDB;
+        private static readonly ICommomDAL<Product> productDB;
 
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace SV18T1021193.BusinessLayer
                 supplierDB = new DataLayer.SQLServer.SupplierDAL(connectionString);
                 employeeDB = new DataLayer.SQLServer.EmployeeDAL(connectionString);
                 shipperDB = new DataLayer.SQLServer.ShipperDAL(connectionString);
+                productDB = new DataLayer.SQLServer.ProductDAL(connectionString);
             }
             else
             {
@@ -64,7 +66,7 @@ namespace SV18T1021193.BusinessLayer
         /// <returns></returns>
         public static List<Category> ListOfCategories()
         {
-            return categoryDB.List(1, 0, "").ToList();
+            return categoryDB.List().ToList();
         }
         public static List<Category> ListOfCategories(int page,
                                                        int pageSize,
@@ -115,6 +117,69 @@ namespace SV18T1021193.BusinessLayer
         public static bool InUsedCategory(int categoryID)
         {
             return categoryDB.InUsed(categoryID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Product> ListOfProducts(int page,
+                                                       int pageSize,
+                                                       string searchValue,
+                                                       out int rowCount)
+        {
+            rowCount = productDB.Count(searchValue);
+            return productDB.List(page, pageSize, searchValue).ToList();
+        }
+        /// <summary>
+        /// Lấy thông tin mặt hàng hàng theo id
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public static Product GetProduct(int productID)
+        {
+            return productDB.Get(productID);
+        }
+        /// <summary>
+        /// Thêm mặt hàng theo data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddProduct(Product data)
+        {
+            return productDB.Add(data);
+        }
+        /// <summary>
+        /// Update mặt hàng theo data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateProduct(Product data)
+        {
+            return productDB.Update(data);
+        }
+        /// <summary>
+        /// Xóa loại hàng theo ID,(kiểm tra InUsed)
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public static bool DeleteProduct(int productID)
+        {
+            if (productDB.InUsed(productID))
+                return false;
+            return productDB.Delete(productID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public static bool InUsedProduct(int productID)
+        {
+            return productDB.InUsed(productID);
         }
         /// <summary>
         /// 

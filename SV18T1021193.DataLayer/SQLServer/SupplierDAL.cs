@@ -185,6 +185,7 @@ namespace SV18T1021193.DataLayer.SQLServer
 
             return data;
         }
+        
 
         public bool Update(Supplier data)
         {

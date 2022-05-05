@@ -13,24 +13,51 @@ namespace SV18T1021193.Web.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        public ActionResult Index(int page = 1, string searchValue = "")
+        public ActionResult Index()
         {
-            int pageSize = 10;
+            Models.PaginationSearchInput model = Session["CATEGORY_SEARCH"] as Models.PaginationSearchInput;
+            if (model == null)
+            {
+                model = new Models.PaginationSearchInput()
+                {
+                    Page = 1,
+                    PageSize = 4,
+                    SearchValue = ""
+                };
+            }
+            return View(model);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ActionResult Search(Models.PaginationSearchInput input)
+        {
+
             int rowCount = 0;
-            var data = CommonDataService.ListOfCategories(page,
-                pageSize,
-                searchValue,
+
+            var data = CommonDataService.ListOfCategories(input.Page,
+                input.PageSize,
+                input.SearchValue,
                 out rowCount);
             Models.BasePaginationResult model = new Models.CategoryPaginationResult()
             {
-                Page = page,
-                PageSize = pageSize,
+                Page = input.Page,
+                PageSize = input.PageSize,
                 RowCount = rowCount,
-                SearchValue = searchValue,
+                SearchValue = input.SearchValue,
                 Data = data
             };
+
+            Session["CATEGORY_SEARCH"] = input;
+
             return View(model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             Category model = new Category()

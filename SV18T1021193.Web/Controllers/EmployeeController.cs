@@ -14,22 +14,45 @@ namespace SV18T1021193.Web.Controllers
     public class EmployeeController : Controller
     {
         // GET: Employee
-        public ActionResult Index(int page = 1, string searchValue = "")
+        public ActionResult Index()
         {
-            int pageSize = 10;
+            Models.PaginationSearchInput model = Session["EMPLOYEE_SEARCH"] as Models.PaginationSearchInput;
+            if (model == null)
+            {
+                model = new Models.PaginationSearchInput()
+                {
+                    Page = 1,
+                    PageSize = 5,
+                    SearchValue = ""
+                };
+            }
+            return View(model);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ActionResult Search(Models.PaginationSearchInput input)
+        {
+
             int rowCount = 0;
-            var data = CommonDataService.ListOfEmployees(page,
-                pageSize,
-                searchValue,
+
+            var data = CommonDataService.ListOfEmployees(input.Page,
+                input.PageSize,
+                input.SearchValue,
                 out rowCount);
             Models.BasePaginationResult model = new Models.EmployeePaginationResult()
             {
-                Page = page,
-                PageSize = pageSize,
+                Page = input.Page,
+                PageSize = input.PageSize,
                 RowCount = rowCount,
-                SearchValue = searchValue,
+                SearchValue = input.SearchValue,
                 Data = data
             };
+
+            Session["EMPLOYEE_SEARCH"] = input;
+
             return View(model);
         }
         public ActionResult Create()

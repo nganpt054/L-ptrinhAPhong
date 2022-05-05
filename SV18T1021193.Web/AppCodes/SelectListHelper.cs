@@ -34,5 +34,47 @@ namespace SV18T1021193.Web
             }
             return list;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<SelectListItem> Categories()
+        {
+            //SelectListItem : tạo ra option trong thẻ select
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem() { Value = "", Text = "-- Loại hàng--" });
+            foreach (var c in CommonDataService.ListOfCategories())
+            {
+                list.Add(new SelectListItem()
+                {
+                    Value = c.CategoryName,
+                    Text = c.CategoryName
+                }
+                );
+
+            }
+            return list;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<SelectListItem> Suppliers()
+        {
+            //SelectListItem : tạo ra option trong thẻ select
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem() { Value = "", Text = "--Nhà cung cấp--" });
+            foreach (var c in CommonDataService.ListOfSuppliers())
+            {
+                list.Add(new SelectListItem()
+                {
+                    Value = c.SupplierName,
+                    Text = c.SupplierName
+                }
+                );
+
+            }
+            return list;
+        }
     }
 }
