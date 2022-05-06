@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace SV18T1021193.DataLayer.SQLServer
 {
-    public class CategoryDAL : _BaseDAL, ICommomDAL<Category>
+    public class CategoryDAL : _BaseDAL, ICommonDAL<Category>
     {
         public CategoryDAL(string connectionString) : base(connectionString)
         {
@@ -138,19 +138,16 @@ namespace SV18T1021193.DataLayer.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT *
-                            FROM
-                            (
-                                SELECT    *, ROW_NUMBER() OVER (ORDER BY CategoryName) AS RowNumber
-                                FROM    Categories
-                                WHERE    (@searchValue = N'')
-                                    OR    (
-                                            (CategoryName LIKE @searchValue)
-                                         OR (Description LIKE @searchValue)
-                                        
-                                        )
-                            ) AS t
-                            WHERE t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize;";
-
+                                    FROM
+                                    (
+                                        SELECT    *, ROW_NUMBER() OVER (ORDER BY CategoryName) AS RowNumber
+                                        FROM    Categories
+                                        WHERE    (@searchValue = N'')
+                                            OR    (
+                                                    (CategoryName LIKE @searchValue)
+                                                )
+                                    ) AS t
+                                    WHERE (@PageSize = 0) OR ( t.RowNumber BETWEEN (@page - 1)*  @pageSize + 1 AND @page * @pageSize)";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@page", page);
@@ -164,14 +161,12 @@ namespace SV18T1021193.DataLayer.SQLServer
                     {
                         CategoryID = Convert.ToInt32(dbReader["CategoryID"]),
                         CategoryName = Convert.ToString(dbReader["CategoryName"]),
-                        Description = Convert.ToString(dbReader["Description"]),
-                       
+                        Description = Convert.ToString(dbReader["Description"])
                     });
                 }
                 dbReader.Close();
                 cn.Close();
             }
-
             return data;
         }
 

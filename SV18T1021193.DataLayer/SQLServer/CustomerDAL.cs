@@ -11,7 +11,7 @@ namespace SV18T1021193.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class CustomerDAL : _BaseDAL, ICommomDAL<Customer>
+    public class CustomerDAL : _BaseDAL, ICommonDAL<Customer>
     {
         /// <summary>
         /// Contrucstor

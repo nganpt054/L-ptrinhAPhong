@@ -39,11 +39,21 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-trash"></i> Đồng ý xóa
-                    </button>
-                    <a class="btn btn-warning" href="~/product">
-                        <i class="fa fa-ban"></i> Quay lại
+                    @if (SV18T1021193.BusinessLayer.CommonDataService.InUsedProduct(@Model.ProductID))
+                    {
+                        <p class="text-warning">Không được xóa mặt hàng này</p>
+                    }
+                    else
+                    {
+                        <button type="submit"
+                                class="btn btn-danger">
+                            <i class="fa fa-trash"></i> Đồng ý xóa
+                        </button>
+
+
+                    }
+                    <a href="~/product" class="btn btn-default">
+                        <i class="fa fa-backward"></i>Quay lại
                     </a>
                 </div>
             </div>

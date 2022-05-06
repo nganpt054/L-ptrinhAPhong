@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SV18T1021193.DataLayer.SQLServer
 {
-    public class SupplierDAL : _BaseDAL,ICommomDAL<Supplier>
+    public class SupplierDAL : _BaseDAL,ICommonDAL<Supplier>
     {
         public SupplierDAL(string connectionString) : base(connectionString)
         {
@@ -135,7 +135,6 @@ namespace SV18T1021193.DataLayer.SQLServer
             }
             return result;
         }
-
         public IList<Supplier> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Supplier> data = new List<Supplier>();
@@ -145,19 +144,18 @@ namespace SV18T1021193.DataLayer.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT *
-                        FROM
-                        (
-                            SELECT    *, ROW_NUMBER() OVER (ORDER BY SupplierName) AS RowNumber
-                            FROM    Suppliers
-                            WHERE    (@searchValue = N'')
-                                OR    (
-                                        (SupplierName LIKE @searchValue)
-                                     OR (ContactName LIKE @searchValue)
-                                     OR (Address LIKE @searchValue)
-                                    )
-                        ) AS t
-                        WHERE t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize;";
-
+                                    FROM
+                                    (
+                                        SELECT    *, ROW_NUMBER() OVER (ORDER BY SupplierName) AS RowNumber
+                                        FROM    Suppliers
+                                        WHERE    (@searchValue = N'')
+                                            OR    (
+                                                    (SupplierName LIKE @searchValue)
+                                                 OR (ContactName LIKE @searchValue)
+                                                 OR (Address LIKE @searchValue)
+                                                )
+                                    ) AS t
+                                    WHERE (@PageSize = 0) OR ( t.RowNumber BETWEEN (@page - 1)*  @pageSize + 1 AND @page * @pageSize)";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@page", page);
@@ -182,10 +180,9 @@ namespace SV18T1021193.DataLayer.SQLServer
                 dbReader.Close();
                 cn.Close();
             }
-
             return data;
         }
-        
+
 
         public bool Update(Supplier data)
         {

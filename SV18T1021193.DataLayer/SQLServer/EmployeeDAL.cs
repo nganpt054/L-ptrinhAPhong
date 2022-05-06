@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SV18T1021193.DataLayer.SQLServer
 {
-    public class EmployeeDAL :_BaseDAL,ICommomDAL<Employee>
+    public class EmployeeDAL :_BaseDAL,ICommonDAL<Employee>
     {
         /// <summary>
         /// 

@@ -9,20 +9,20 @@ using SV18T1021193.DomainModel;
 using SV18T1021193.DataLayer.SQLServer;
 
 namespace SV18T1021193.BusinessLayer
-{
-    /// <summary>
-    /// Cung cấp các chức năng xử lý dữ liệu chung
-    /// </summary>
+{/// <summary>
+ /// Cung cấp các chức năng xử lý dữ liệu chung
+ /// </summary>
     public static class CommonDataService
     {
-        private static readonly ICommomDAL<Country> countryDB;
-        private static readonly ICommomDAL<Category> categoryDB;
-        private static readonly ICommomDAL<Customer> customerDB;
-        private static readonly ICommomDAL<Supplier> supplierDB;
-        private static readonly ICommomDAL<Employee> employeeDB;
-        private static readonly ICommomDAL<Shipper> shipperDB;
-        private static readonly ICommomDAL<Product> productDB;
-
+        private static readonly ICommonDAL<Country> countryDB;
+        private static readonly ICommonDAL<Category> categoryDB;
+        private static readonly ICommonDAL<Customer> customerDB;
+        private static readonly ICommonDAL<Supplier> supplierDB;
+        private static readonly ICommonDAL<Employee> employeeDB;
+        private static readonly ICommonDAL<Shipper> shipperDB;
+        private static readonly ICommonDAL<Product> productDB;
+        private static readonly ICommonDAL<ProductPhoto> productPhotoDB;
+        private static readonly ICommonDAL<ProductAttribute> productAttributeDB;
 
         /// <summary>
         /// contrusctor
@@ -44,6 +44,8 @@ namespace SV18T1021193.BusinessLayer
                 employeeDB = new DataLayer.SQLServer.EmployeeDAL(connectionString);
                 shipperDB = new DataLayer.SQLServer.ShipperDAL(connectionString);
                 productDB = new DataLayer.SQLServer.ProductDAL(connectionString);
+                productPhotoDB = new DataLayer.SQLServer.ProductPhotoDAL(connectionString);
+                productAttributeDB = new DataLayer.SQLServer.ProductAttributeDAL(connectionString);
             }
             else
             {
@@ -61,12 +63,101 @@ namespace SV18T1021193.BusinessLayer
             return countryDB.List().ToList();
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<ProductPhoto> ListOfProductPhotos(string searchValue)
+        {
+            return productPhotoDB.List(1,0,searchValue).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="photoID"></param>
+        /// <returns></returns>
+        public static ProductPhoto GetProductPhoto(int photoID)
+        {
+            return productPhotoDB.Get(photoID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddProductPhoto(ProductPhoto data)
+        {
+            return productPhotoDB.Add(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateProductPhoto(ProductPhoto data)
+        {
+            return productPhotoDB.Update(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="photoID"></param>
+        /// <returns></returns>
+        public static bool DeleteProductPhoto(int photoID)
+        {
+           
+            return productPhotoDB.Delete(photoID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<ProductAttribute> ListOfProductAttributes(string searchValue)
+        {
+            return productAttributeDB.List(1,0,searchValue).ToList();
+        }
+
+        
+        public static ProductAttribute GetProductAttribute(int attributeID)
+        {
+            return productAttributeDB.Get(attributeID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddProductAttribute(ProductAttribute data)
+        {
+            return productAttributeDB.Add(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateProductAttribute(ProductAttribute data)
+        {
+            return productAttributeDB.Update(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="photoID"></param>
+        /// <returns></returns>
+        public static bool DeleteProductAttribute(int attributeID)
+        {
+
+            return productAttributeDB.Delete(attributeID);
+        }
+
+        /// <summary>
         /// Lấy danh sách các mặt hàng
         /// </summary>
         /// <returns></returns>
         public static List<Category> ListOfCategories()
         {
-            return categoryDB.List().ToList();
+            return categoryDB.List(1, 0, "").ToList();
         }
         public static List<Category> ListOfCategories(int page,
                                                        int pageSize,
@@ -117,69 +208,6 @@ namespace SV18T1021193.BusinessLayer
         public static bool InUsedCategory(int categoryID)
         {
             return categoryDB.InUsed(categoryID);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="searchValue"></param>
-        /// <param name="rowCount"></param>
-        /// <returns></returns>
-        public static List<Product> ListOfProducts(int page,
-                                                       int pageSize,
-                                                       string searchValue,
-                                                       out int rowCount)
-        {
-            rowCount = productDB.Count(searchValue);
-            return productDB.List(page, pageSize, searchValue).ToList();
-        }
-        /// <summary>
-        /// Lấy thông tin mặt hàng hàng theo id
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        public static Product GetProduct(int productID)
-        {
-            return productDB.Get(productID);
-        }
-        /// <summary>
-        /// Thêm mặt hàng theo data
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static int AddProduct(Product data)
-        {
-            return productDB.Add(data);
-        }
-        /// <summary>
-        /// Update mặt hàng theo data
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static bool UpdateProduct(Product data)
-        {
-            return productDB.Update(data);
-        }
-        /// <summary>
-        /// Xóa loại hàng theo ID,(kiểm tra InUsed)
-        /// </summary>
-        /// <param name="customerID"></param>
-        /// <returns></returns>
-        public static bool DeleteProduct(int productID)
-        {
-            if (productDB.InUsed(productID))
-                return false;
-            return productDB.Delete(productID);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        public static bool InUsedProduct(int productID)
-        {
-            return productDB.InUsed(productID);
         }
         /// <summary>
         /// 
@@ -335,7 +363,7 @@ namespace SV18T1021193.BusinessLayer
             return employeeDB.List(page, pageSize, searchValue).ToList();
         }
         /// <summary>
-        /// Lấy thông tin nhân viên theo id
+        /// Lấy thông tin nhân viên theo id//0347266936//0909426604
         /// </summary>
         /// <param name="categoryID"></param>
         /// <returns></returns>
@@ -442,6 +470,68 @@ namespace SV18T1021193.BusinessLayer
         public static bool InUsedShipper(int shipperID)
         {
             return shipperDB.InUsed(shipperID);
+        }
+        public static List<Product> ListOfProducts()
+        {
+            return productDB.List().ToList();
+        }
+        /// <summary>
+        /// Tìm kiếm và lấy danh sách mặt hàng dưới dạng phân trang
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Product> ListOfProducts(int page,
+                                                       int pageSize,
+                                                       string searchValue,
+                                                       out int rowCount)
+        {
+            rowCount = productDB.Count(searchValue);
+            return productDB.List(page, pageSize, searchValue).ToList();
+        }
+        /// <summary>
+        /// lấy thông tin mặt hàng theo id
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public static Product GetProduct(int productID)
+        {
+            return productDB.Get(productID);
+        }
+        /// <summary>
+        /// Thêm mặt hàng theo data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddProduct(Product data)
+        {
+            return productDB.Add(data);
+        }
+        /// <summary>
+        /// Update mặt hàng theo data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateProduct(Product data)
+        {
+            return productDB.Update(data);
+        }
+        /// <summary>
+        /// Xóa mặt hàng theo ID,(kiểm tra InUsed)
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public static bool DeleteProduct(int productID)
+        {
+            if (productDB.InUsed(productID))
+                return false;
+            return productDB.Delete(productID);
+        }
+        public static bool InUsedProduct(int productID)
+        {
+            return productDB.InUsed(productID);
         }
     }
 }

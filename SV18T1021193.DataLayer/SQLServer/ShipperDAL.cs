@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SV18T1021193.DataLayer.SQLServer
 {
-    public class ShipperDAL : _BaseDAL,ICommomDAL<Shipper>
+    public class ShipperDAL : _BaseDAL,ICommonDAL<Shipper>
     {
         public ShipperDAL(string connectionString) : base(connectionString)
         {

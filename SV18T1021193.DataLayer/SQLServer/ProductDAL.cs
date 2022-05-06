@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SV18T1021193.DataLayer.SQLServer
 {
-    public class ProductDAL : _BaseDAL, ICommomDAL<Product>
+    public class ProductDAL : _BaseDAL, ICommonDAL<Product>
     {
         public ProductDAL(string connectionString) : base(connectionString)
         {
@@ -55,7 +55,8 @@ namespace SV18T1021193.DataLayer.SQLServer
                                 WHERE    (@searchValue = N'')
                                     OR    (
                                             (ProductName LIKE @searchValue)
-                                         
+                                            or (SupplierID LIKE @searchValue)
+                                             or (CategoryID LIKE @searchValue)
                                         )
                             ";
                 cmd.CommandType = CommandType.Text;
@@ -159,7 +160,8 @@ namespace SV18T1021193.DataLayer.SQLServer
                                     WHERE    (@searchValue = N'')
                                         OR    (
                                                 (ProductName LIKE @searchValue)
-                                             
+                                             or (SupplierID LIKE @searchValue)
+                                             or (CategoryID LIKE @searchValue)
                                             )
                                 ) AS t
                                 WHERE t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize;";
@@ -210,13 +212,13 @@ namespace SV18T1021193.DataLayer.SQLServer
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
 
-                cmd.Parameters.AddWithValue("@ProductName", data.ProductName);
-                cmd.Parameters.AddWithValue("@SupplierID", data.SupplierID);
-                cmd.Parameters.AddWithValue("@CategoryID", data.CategoryID);
-                cmd.Parameters.AddWithValue("@Unit", data.Unit);
-                cmd.Parameters.AddWithValue("@Price", data.Price);
-                cmd.Parameters.AddWithValue("@Photo", data.Photo);
-                cmd.Parameters.AddWithValue("@ProductID", data.ProductID);
+                cmd.Parameters.AddWithValue("@productName", data.ProductName);
+                cmd.Parameters.AddWithValue("@supplierID", data.SupplierID);
+                cmd.Parameters.AddWithValue("@categoryID", data.CategoryID);
+                cmd.Parameters.AddWithValue("@unit", data.Unit);
+                cmd.Parameters.AddWithValue("@price", data.Price);
+                cmd.Parameters.AddWithValue("@photo", data.Photo);
+                cmd.Parameters.AddWithValue("@productID", data.ProductID);
 
                 result = cmd.ExecuteNonQuery() > 0;
 

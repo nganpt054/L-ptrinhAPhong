@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SV18T1021193.DataLayer.SQLServer
 {
-    public class CountryDAL : _BaseDAL,ICommomDAL<Country>
+    public class CountryDAL : _BaseDAL,ICommonDAL<Country>
     {
         public CountryDAL(string connectionString) : base(connectionString)
         {

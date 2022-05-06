@@ -10,7 +10,7 @@ namespace SV18T1021193.Web.Models
     /// </summary>
     public class ProductSearchInput:PaginationSearchInput
     {
-        public string SupplierID { get; set; }
-        public string CategoryID { get; set; }
+        public string SupplierName { get; set; }
+        public string CategoryName { get; set; }
     }
 }
