@@ -14,6 +14,10 @@ namespace SV18T1021193.Web.Controllers
     public class EmployeeController : Controller
     {
         // GET: Employee
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             Models.PaginationSearchInput model = Session["EMPLOYEE_SEARCH"] as Models.PaginationSearchInput;
@@ -55,6 +59,10 @@ namespace SV18T1021193.Web.Controllers
 
             return View(model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             Employee model = new Employee()

@@ -13,6 +13,10 @@ namespace SV18T1021193.Web.Controllers
     public class SupplierController : Controller
     {
         // GET: Supplier
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             Models.PaginationSearchInput model = Session["SUPPLIER_SEARCH"] as Models.PaginationSearchInput;
@@ -27,6 +31,11 @@ namespace SV18T1021193.Web.Controllers
             }
             return View(model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public ActionResult Search(Models.PaginationSearchInput input)
         {
 
@@ -49,6 +58,10 @@ namespace SV18T1021193.Web.Controllers
 
             return View(model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             Supplier model = new Supplier()
@@ -83,6 +96,11 @@ namespace SV18T1021193.Web.Controllers
             ViewBag.Title = "Cập nhật nhà cung cấp";
             return View("Create", model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public ActionResult Save(Supplier model)
         {
             if (string.IsNullOrWhiteSpace(model.SupplierName))

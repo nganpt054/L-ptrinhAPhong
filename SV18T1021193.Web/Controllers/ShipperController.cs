@@ -25,7 +25,7 @@ namespace SV18T1021193.Web.Controllers
                 model = new Models.PaginationSearchInput()
                 {
                     Page = 1,
-                    PageSize = 2,
+                    PageSize = 5,
                     SearchValue = ""
                 };
             }
@@ -96,6 +96,11 @@ namespace SV18T1021193.Web.Controllers
             ViewBag.Title = "Cập nhật shipper";
             return View("Create", model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public ActionResult Save(Shipper model)
         {
             if (string.IsNullOrWhiteSpace(model.ShipperName))

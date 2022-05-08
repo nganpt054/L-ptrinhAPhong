@@ -137,6 +137,7 @@
     <Compile Include="Models\CategoryPaginationResult.cs" />
     <Compile Include="Models\CustomerPaginationResult.cs" />
     <Compile Include="Models\EmployeePaginationResult.cs" />
+    <Compile Include="Models\LogAttribute.cs" />
     <Compile Include="Models\PaginationSearchInput.cs" />
     <Compile Include="Models\ProductPaginationResult.cs" />
     <Compile Include="Models\ProductSearchInput.cs" />

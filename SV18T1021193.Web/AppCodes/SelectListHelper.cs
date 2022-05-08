@@ -32,11 +32,14 @@ namespace SV18T1021193.Web
             }
             return list;
         }
-
+        /// <summary>
+        /// Danh sách các nhà cung cấp
+        /// </summary>
+        /// <returns></returns>
         public static List<SelectListItem> SelectSupplier()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem() { Value = "", Text = "--Nhà cung cấp--" });
+            list.Add(new SelectListItem() { Value = "0", Text = "--Nhà cung cấp--" });
            
             foreach (var c in CommonDataService.ListOfSuppliers())
             { 
@@ -53,11 +56,14 @@ namespace SV18T1021193.Web
             }
             return list;
         }
-
+        /// <summary>
+        /// Danh sách các mặt hàng
+        /// </summary>
+        /// <returns></returns>
         public static List<SelectListItem> SelectCategories()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem() { Value = "", Text = "--Loại hàng--" });
+            list.Add(new SelectListItem() { Value = "0", Text = "--Loại hàng--" });
             foreach (var c in CommonDataService.ListOfCategories())
             {
                 list.Add(new SelectListItem()

@@ -13,6 +13,10 @@ namespace SV18T1021193.Web.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             Models.PaginationSearchInput model = Session["CATEGORY_SEARCH"] as Models.PaginationSearchInput;
@@ -21,7 +25,7 @@ namespace SV18T1021193.Web.Controllers
                 model = new Models.PaginationSearchInput()
                 {
                     Page = 1,
-                    PageSize = 4,
+                    PageSize = 10,
                     SearchValue = ""
                 };
             }
@@ -92,6 +96,11 @@ namespace SV18T1021193.Web.Controllers
             ViewBag.Title = "Cập nhật loại hàng";
             return View("Create", model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public ActionResult Save(Category model)
         {
             model.Description = "";

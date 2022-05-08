@@ -1,5 +1,6 @@
 ﻿using SV18T1021193.BusinessLayer;
 using SV18T1021193.DomainModel;
+using SV18T1021193.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace SV18T1021193.Web.Controllers
     /// </summary>
     [Authorize]
     [RoutePrefix("product")]
+    
     public class ProductController : Controller
     {
         /// <summary>
@@ -30,7 +32,9 @@ namespace SV18T1021193.Web.Controllers
                 {
                     Page = 1,
                     PageSize = 10,
-                    SearchValue = ""
+                    SearchValue = "",
+                    CategoryName="0",
+                    SupplierName="0"
                 };
 
             }
@@ -39,9 +43,11 @@ namespace SV18T1021193.Web.Controllers
         public ActionResult Search(Models.ProductSearchInput input)
         {
             int rowCount = 0;
-            var data = CommonDataService.ListOfProducts(input.Page,
+            var data = ProductDataService.ListOfProducts(input.Page,
                 input.PageSize,
                 input.SearchValue,
+                Convert.ToInt32(input.CategoryName),
+                Convert.ToInt32(input.SupplierName),
                 out rowCount);
             Models.BasePaginationResult model = new Models.ProductPaginationResult()
             {
@@ -86,15 +92,21 @@ namespace SV18T1021193.Web.Controllers
             {
                 return RedirectToAction("Index");
             }
-            CommonDataService.DeleteProductAttribute(aID);
-            CommonDataService.DeleteProductPhoto(pID);
-            Product model = CommonDataService.GetProduct(id);
+            ProductDataService.DeleteProductAttribute(aID);
+            ProductDataService.DeleteProductPhoto(pID);
+            Product model = ProductDataService.GetProduct(id);
             if (model == null)
                 return RedirectToAction("Index");
 
             ViewBag.Title = "Cập nhật mặt hàng";
             return View("Edit", model);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="uploadPhoto"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Save(Product model, HttpPostedFileBase uploadPhoto)
         {
@@ -144,12 +156,12 @@ namespace SV18T1021193.Web.Controllers
             }
             if (model.ProductID == 0)
             {
-                CommonDataService.AddProduct(model);
+                ProductDataService.AddProduct(model);
 
             }
             else
             {
-                CommonDataService.UpdateProduct(model);
+                ProductDataService.UpdateProduct(model);
 
             }
             return RedirectToAction("Index");
@@ -164,11 +176,11 @@ namespace SV18T1021193.Web.Controllers
         {
             if (Request.HttpMethod == "POST")
             {
-                CommonDataService.DeleteProduct(productID);
+                ProductDataService.DeleteProduct(productID);
                 return RedirectToAction("Index");
             }
 
-            var model = CommonDataService.GetProduct(productID);
+            var model = ProductDataService.GetProduct(productID);
             if (model == null)
                 return RedirectToAction("Index");
             return View(model);
@@ -186,16 +198,10 @@ namespace SV18T1021193.Web.Controllers
 
             if (photoID != null)
             {
-                ProductPhoto model = new ProductPhoto()
-                {
-                    PhotoID = Convert.ToInt32(photoID),
-                    ProductID = productID
-                };
+                ProductPhoto model = ProductDataService.GetProductPhoto(Convert.ToInt32(photoID));
                 switch (method)
                 {
-                    case "add":
-                        ViewBag.Title = "Bổ sung ảnh";
-                        break;
+                    
                     case "edit":
                         ViewBag.Title = "Thay đổi ảnh";
                         break;
@@ -219,11 +225,7 @@ namespace SV18T1021193.Web.Controllers
                     case "add":
                         ViewBag.Title = "Bổ sung ảnh";
                         break;
-                    case "edit":
-                        ViewBag.Title = "Thay đổi ảnh";
-                        break;
-                    case "delete":
-                        return RedirectToAction("Edit", new { productID = productID, photoID = photoID });
+                    
                     default:
                         return RedirectToAction("Index");
                 }
@@ -231,6 +233,12 @@ namespace SV18T1021193.Web.Controllers
                 return View(model);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="uploadPhoto"></param>
+        /// <returns></returns>
 
         [HttpPost]
         public ActionResult SavePhoto(ProductPhoto model, HttpPostedFileBase uploadPhoto)
@@ -271,15 +279,15 @@ namespace SV18T1021193.Web.Controllers
             }
             if (model.PhotoID == 0)
             {
-                CommonDataService.AddProductPhoto(model);
+                ProductDataService.AddProductPhoto(model);
 
             }
             else
             {
-                CommonDataService.UpdateProductPhoto(model);
+                ProductDataService.UpdateProductPhoto(model);
 
             }
-            return RedirectToAction("Edit/{productID}");
+            return RedirectToAction("Edit",new { productID=model.ProductID});
         }
         /// <summary>
         /// 
@@ -293,16 +301,10 @@ namespace SV18T1021193.Web.Controllers
         {
             if (attributeID!=null)
             {
-                ProductAttribute model = new ProductAttribute()
-                {
-                    AttributeID = Convert.ToInt32(attributeID),
-                    ProductID = productID
-                };
+                ProductAttribute model = ProductDataService.GetProductAttribute(Convert.ToInt32(attributeID));
                 switch (method)
                 {
-                    case "add":
-                        ViewBag.Title = "Bổ sung thuộc tính";
-                        break;
+                    
                     case "edit":
                         ViewBag.Title = "Thay đổi thuộc tính";
                         break;
@@ -325,11 +327,7 @@ namespace SV18T1021193.Web.Controllers
                     case "add":
                         ViewBag.Title = "Bổ sung thuộc tính";
                         break;
-                    case "edit":
-                        ViewBag.Title = "Thay đổi thuộc tính";
-                        break;
-                    case "delete":
-                        return RedirectToAction("Edit", new { productID = productID, attributeID = attributeID });
+                    
                     default:
                         return RedirectToAction("Index");
                 }
@@ -337,6 +335,11 @@ namespace SV18T1021193.Web.Controllers
             } 
   
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         public ActionResult SaveAttribute(ProductAttribute model)
         {
@@ -365,13 +368,13 @@ namespace SV18T1021193.Web.Controllers
 
             if (model.AttributeID == 0)
             {
-                CommonDataService.AddProductAttribute(model);
+                ProductDataService.AddProductAttribute(model);
                 return RedirectToAction("Edit/{productID}");
             }
             else
             {
-                CommonDataService.UpdateProductAttribute(model);
-                return RedirectToAction("Edit/{productID}");
+                ProductDataService.UpdateProductAttribute(model);
+                return RedirectToAction("Edit",new { productID=model.ProductID});
             }
         }
     }
